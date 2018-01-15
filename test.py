@@ -1,19 +1,12 @@
 import itertools
 import random
-
+import indianshuffle
 
 def initialize():
-    a = ['Diamond', 'Spade', 'Clover', 'Hearts']
-    b = ['K', 'Q', 'J', 'A']
-    for i in range(2, 11):
-        b.append(str(i))
-    superset = list(itertools.product(a, b, repeat=1))
-    # print(superset)
-    large = []
-    for each in superset:
-        large.append(each[1] + 'of' + each[0])
-        # print each
-    return large
+    values = range(2, 11) + "Ace Jack Queen King".split()
+    suits = "Diamonds Clubs Hearts Spades".split()
+    deck_of_cards = ["%s of %s" % (v, s) for v in values for s in suits]
+    return deck_of_cards
 
 
 def sattolocycle(items):
@@ -31,29 +24,10 @@ def distribute(shufleddeck, n):
     return deck, remainingdeck
 
 
-def hindushuffle(deck, n):
-    decklength = len(deck)
-    i = 0
-    while i < n:
-        finger = round(random.random() * 52)
-        position = round(random.random() * (decklength - finger))
-        decktop = deck[int(min(finger, position)):int(max(position, finger) + 1)]
-        deckbottom = deck
-        for each in decktop:
-            deckbottom.remove(each)
-            # print(each)
-        # print(decktop)
-        # print(deckbottom)
-        deck = decktop
-        deck.extend(deckbottom)
-        i = i + 1
-    return deck
-
-
 fulldeck = initialize()
 # print(fulldeck)
 
-shufdeck = hindushuffle(fulldeck, 10)
+shufdeck = indianshuffle.indianshuffle(fulldeck, 10)
 ##print(shufdeck)
 # print(riffle(fulldeck))
 ncard = input("Enter number of cards: ")
